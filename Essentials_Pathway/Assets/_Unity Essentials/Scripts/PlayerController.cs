@@ -14,10 +14,20 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
+    public float jumpForce = 5.0f;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         if (rb == null) Debug.LogWarning("PlayerController needs a Rigidbody.");
+    }
+    
+    void Update()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.VelocityChange);
+        }
     }
 
     private void FixedUpdate()
@@ -44,5 +54,6 @@ public class PlayerController : MonoBehaviour
         float turn = turnDirection * rotationSpeed * Time.fixedDeltaTime;
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
         rb.MoveRotation(rb.rotation * turnRotation);
+        
     }
 }
